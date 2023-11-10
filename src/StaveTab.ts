@@ -14,12 +14,16 @@ export class StaveTab extends Stave {
   }
 
   render() {
-    // TODO: el top 30px deberia ser 0px, el stade no esta alineado arriba
-    const height = (this.lines * 10) - 5
-    const top = 10
+    const height = (this.lines * 10)
+    let fontSize = 12
+    if(this.lines > 4) fontSize = 16
+    if(this.lines > 9) fontSize = 20
+    
     const content = `
       <div style="position:relative; width: 100%; height: auto;">
-        <div style="position: absolute;top:12px;left:5px;font-size: 18px;width: 20px; height: ${height}px; background: red;display: flex; flex-direction: column; justify-content: center; word-wrap: break-word; text-align: center; font-weight: bold;">TAB</div>
+        <div style="position: absolute;top:10px;left:5px;font-size: ${fontSize}px;width: 20px; height: ${height}px; display: flex; align-items:center; ">
+          <span style="writing-mode: vertical-lr;text-orientation: upright;font-weight: bold;">TAB</span>
+        </div>
         ${super.render()}
       </div>
     `

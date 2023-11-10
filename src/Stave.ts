@@ -2,7 +2,7 @@ export interface StaveOptions {
   lines: number;
 }
 
-const STAVE_MARGIN = 15
+const STAVE_MARGIN = 20
 const STAVE_SEPARATOR_LINES = 10
 export class Stave {
   lines: number;
@@ -12,7 +12,7 @@ export class Stave {
   }
 
   render() {
-    let height = STAVE_MARGIN + 5 + (this.lines * STAVE_SEPARATOR_LINES)
+    let height = STAVE_MARGIN*2 + (this.lines * STAVE_SEPARATOR_LINES)
     let content  =  `<svg width="100%" height="${height}px">`
     for (let i = 0; i < this.lines; i++) {
       const yCoord = STAVE_MARGIN + (i === 0 ? 0 : i * STAVE_SEPARATOR_LINES)
