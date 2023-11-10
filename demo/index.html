@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo page Virtuosso-Editor</title>
+</head>
+<body>
+  <div id="virtuosso-editor" style="width: 100%; background-color: red;"></div>
+  <script type="module">
+    import {VirtuossoEditor} from '../src/index.ts';
+    let editor = new VirtuossoEditor({ elementId: 'virtuosso-editor', tablature: true, tablatureStrings: 6, staveF: true, staveG: true});
+  </script>
+</body>
+</html>
