@@ -72,14 +72,15 @@ export class VirtuossoEditor {
 
       // load lines to join staves
     }
+    
 
     private generateStaveG() {
-      const stave = new StaveG()
+      const stave = new StaveG({ compasses: [{}]})
       return stave.render()
     }
 
     private generateStaveF() {
-      const stave = new StaveF()
+      const stave = new StaveF({ compasses: [{}]})
       return stave.render()
     }
 
