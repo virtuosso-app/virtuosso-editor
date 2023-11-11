@@ -7,6 +7,7 @@ import dts from 'vite-plugin-dts';
 // Configure Vitest (https://vitest.dev/config/)
 
 export default defineConfig({
+	root: './demo',
 	build: {
 		lib: {
 			entry: resolve(__dirname, 'src/index.ts'),
