@@ -10,7 +10,7 @@ const barCompleted = () => {
 </script>
 
 <div class="bar" style="width: {bar.width}px; height: {bar.height}px">
-  {bar.ticks} - {bar.width} - {barCompleted()}
+  {bar.ticks} - {bar.width}
 </div>
 
 <style>

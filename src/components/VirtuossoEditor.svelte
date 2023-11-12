@@ -1,13 +1,13 @@
 <script lang="ts">
 import { onMount } from 'svelte'
-import {default as config} from '../config/editor'
+import { processPartiture, type Partiture } from '../lib/processPartiture'
 import StaveG from './StaveG.svelte'
 import Bar from './Bar.svelte'
 
 let editorWidth: number
 
 
-const partiture = {
+const partiture: Partiture = {
   clefG: true,
   clefF: false,
   tablature: false,
@@ -23,55 +23,50 @@ const partiture = {
     },
     {
       ticks: 192,
+      notes: [
+        { note: 'C4', figure: 'q', dotted: false, triplets: false, triplests_dotted: false},
+        { note: 'C4', figure: 'q', dotted: false, triplets: false, triplests_dotted: false},
+        { note: 'C4', figure: 'q', dotted: false, triplets: false, triplests_dotted: false},
+        { note: 'C4', figure: 'q', dotted: false, triplets: false, triplests_dotted: false}
+      ]
+    },
+    {
+      ticks: 192,
       notes: []
     },
   ]
 }
-let parts = {
-  staves: 1,
-  bars: []
-}
-const processPartiture = () => {
-  console.log('WIDTH', editorWidth)
-  let staves = []
-  partiture.bars.forEach((bar: any) => {
-    bar.width = 0
-    if(bar.notes.length === 0) bar.width = config.bar.defaultWidth
-    bar.notes.forEach((note: any) => {
-      const noteConfig = config.figures[note.figure]
-      bar.width += noteConfig.width
-    })
-  })
 
-  let staveWidth = 0
-  partiture.bars.forEach((bar: any) => {
-    staveWidth += bar.width
-    if(staveWidth >= editorWidth) {
-      staveWidth = 0
-    }
-  })
+// Ejemplo de uso
 
-  console.log('PARTITURE', partiture)
-}
+
 let loaded = false
+let staves = []
 onMount(() => {
-  processPartiture()
+  staves = processPartiture(partiture, editorWidth);
+  console.log(staves);
   loaded = true
 })
 </script>
 
 {#if loaded}
 <div class="editor" bind:clientWidth={editorWidth}>
-  {#if partiture.clefG}
-    <StaveG />
-  {/if}
-
-
-  <div class="bars" style="height: 100px">
-    {#each partiture.bars as bar}
-      <Bar {bar}/>
+  <div class="staves">
+    {#each staves as stave}
+      <StaveG />
+      <div class="bars" style="height: 80px">
+        {#each stave.bars as bar}
+          <Bar {bar}/>
+        {/each}
+      </div>
     {/each}
   </div>
+  <!-- {#if partiture.clefG}
+    <StaveG />
+  {/if} -->
+
+
+  
 
   
   
@@ -83,8 +78,14 @@ onMount(() => {
     width: 100%;
     height: 100%;
   }
-
+  .staves {
+    position:relative;
+    width: 100%;
+  }
   .bars {
+    position: absolute;
+    top: 0;
+    left: 80px;
     width: 100%;
     display: flex;
     align-items:center;
