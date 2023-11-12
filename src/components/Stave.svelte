@@ -1,11 +1,10 @@
 <script lang="ts">
-  import Compass from './Compass.svelte'
+  import Compass from './Bar.svelte'
 const DEFAULT_LINES = 5
 const STAVE_MARGIN = 20
 const STAVE_SEPARATOR_LINES = 10
 
 export let lines = DEFAULT_LINES
-export let compasses = []
 
 const height = (lines-1) * STAVE_SEPARATOR_LINES
 const getYCoord = (idx) => {
@@ -18,17 +17,7 @@ const getYCoord = (idx) => {
     <slot name="header" />
   </div>
   
-  <div class="compasses" style="height: {height+(STAVE_MARGIN*2)}px">
-    {#each compasses as compass}
-      <Compass options={
-        {
-          height,
-          ticks: compass.ticks,
-          notes: compass.notes
-        }
-      }/>
-    {/each}
-  </div>
+  
 
   <div class="stave-lines" style="height: {height+(STAVE_MARGIN*2)}px">
     <svg width="100%" height="{height}px">`
@@ -59,9 +48,5 @@ const getYCoord = (idx) => {
     align-items: center;
   }
 
-  .compasses {
-    width: 100%;
-    display: flex;
-    align-items:center;
-  }
+
 </style>

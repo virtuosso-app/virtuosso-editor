@@ -2,11 +2,11 @@
   import Stave from "./Stave.svelte";
   import clefG from '../assets/clefG.svg'
 
-  export let compasses = []
+
 </script>
 
 
-<Stave lines={5} {compasses}>
+<Stave lines={5}>
   <svelte:fragment slot="header">
     <div class="clef clefG">
       <img src="{clefG}" width="100%" />
