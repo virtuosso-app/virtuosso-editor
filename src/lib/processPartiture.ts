@@ -17,6 +17,7 @@ export interface Partiture {
   clefF: boolean;
   tablature: boolean;
   bars: Bar[];
+  barsF: Bar[];
 }
 
 function calculateBarWidth(bar: Bar) {
@@ -31,28 +32,36 @@ function calculateBarWidth(bar: Bar) {
   return width;
 }
 
-export function processPartiture(partiture: Partiture, widthScreen: number) {
-  const { bars } = partiture;
-
+function processClef(bars, widthScreen: number) {
+  // ClefG
   const staves = [];
-  let currentSlave = { bars: [], totalWidth: 0 };
+  let currentStave = { bars: [], totalWidth: 0 };
 
   for (const currentBar of bars) {
     const currentBarWidth = calculateBarWidth(currentBar);
     currentBar.width = currentBarWidth;
-    if (currentSlave.totalWidth + currentBarWidth > widthScreen) {
-      staves.push(currentSlave);
-      currentSlave = { bars: [], totalWidth: 0 };
+    if (currentStave.totalWidth + currentBarWidth > widthScreen) {
+      staves.push(currentStave);
+      currentStave = { bars: [], totalWidth: 0 };
     }
 
-    currentSlave.bars.push(currentBar);
-    currentSlave.totalWidth += currentBarWidth;
+    currentStave.bars.push(currentBar);
+    currentStave.totalWidth += currentBarWidth;
   }
 
   // Agrega la última sección si es necesario
-  if (currentSlave.bars.length > 0) {
-    staves.push(currentSlave);
+  if (currentStave.bars.length > 0) {
+    staves.push(currentStave);
   }
 
   return staves;
+}
+export function processPartiture(partiture: Partiture, widthScreen: number) {
+  // TODO: Hay que procesar el width del header: clef, time signature, etc.
+  const { bars, barsF } = partiture;
+
+  const stavesG = processClef(bars, widthScreen);
+  const stavesF = processClef(barsF, widthScreen);
+
+  return { stavesG, stavesF };
 }

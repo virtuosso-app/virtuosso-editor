@@ -1,4 +1,24 @@
 export default {
+  staves: {
+    height: 40,
+    separatorLines: 10,
+    defaultLines: 5,
+    marginTopDown: 20,
+    tablatureDefaultLines: 6,
+    minTablatureLines: 4,
+    maxTablatureLines: 12,
+    heightTablatures: {
+      4: 30,
+      5: 40,
+      6: 50,
+      7: 60,
+      8: 70,
+      9: 80,
+      10: 90,
+      11: 100,
+      12: 110,
+    },
+  },
   bar: {
     defaultWidth: 80,
   },
