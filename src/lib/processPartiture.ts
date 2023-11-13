@@ -16,6 +16,7 @@ export interface Partiture {
   clefG: boolean;
   clefF: boolean;
   tablature: boolean;
+  tablatureLines: number;
   bars: Bar[];
   barsF: Bar[];
 }

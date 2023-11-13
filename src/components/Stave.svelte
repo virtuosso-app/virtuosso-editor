@@ -6,7 +6,7 @@ const STAVE_SEPARATOR_LINES = config.staves.separatorLines
 
 export let lines = DEFAULT_LINES
 
-const height = config.staves.height
+const height = lines === DEFAULT_LINES ? config.staves.height : config.staves.heightTablatures[lines]
 const getYCoord = (idx) => {
   return idx === 0 ? 0 : idx * STAVE_SEPARATOR_LINES
 }
@@ -47,6 +47,8 @@ const getYCoord = (idx) => {
       align-items: center;
     }
   }
+
+
   
   
 

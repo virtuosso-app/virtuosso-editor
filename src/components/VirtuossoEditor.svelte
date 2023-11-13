@@ -5,6 +5,7 @@ import { processPartiture, type Partiture } from '../lib/processPartiture'
 import StaveG from './StaveG.svelte'
 import StaveF from './StaveF.svelte'
 import Bar from './Bar.svelte'
+  import StaveTab from './StaveTab.svelte';
 
 let editorWidth: number
 
@@ -12,7 +13,8 @@ let editorWidth: number
 const partiture: Partiture = {
   clefG: true,
   clefF: false,
-  tablature: false,
+  tablature: true,
+  tablatureLines: 6,
   bars: [
     {
       ticks: 192,
@@ -180,9 +182,10 @@ let staves: any = {
   stavesG: [],
   stavesF: []
 }
-
+let heightBar = config.staves.height
 const process = () => {
   staves = processPartiture(partiture, editorWidth-140); // TODO: Calcular el with del editor - padding - headers de armadura etc
+  heightBar = partiture.tablature ? config.staves.heightTablatures[partiture.tablatureLines] : config.staves.height
   console.log(staves);
 }
 onMount(() => {
@@ -198,24 +201,44 @@ onMount(() => {
 <div class="editor" bind:clientWidth={editorWidth}>
   {#if loaded}
     {#each staves.stavesG as stave, idx}
-      <div class="stave">
-        <StaveG />
-        <div class="bars" style="height: {config.staves.height + config.staves.marginTopDown*2}px">
-          {#each stave.bars as bar}
-            <Bar {bar} height={config.staves.height}/>
-          {/each}
-        </div>
-        {#if idx === staves.stavesG.length-1}
-          <div class="stave-end" style="height: {config.staves.height + config.staves.marginTopDown*2}px">
-            <div style="height: {config.staves.height}px">
-              <span></span>
+      <div class="stave-group">
+       
+        <div class="stave">
+          <StaveG />
+          <div class="bars" style="height: {config.staves.height + config.staves.marginTopDown*2}px">
+            {#each stave.bars as bar}
+              <Bar {bar} height={config.staves.height}/>
+            {/each}
+          </div>
+          {#if idx === staves.stavesG.length-1}
+            <div class="stave-end" style="height: {config.staves.height + config.staves.marginTopDown*2}px">
+              <div style="height: {config.staves.height}px">
+                <span></span>
+              </div>
             </div>
+          {/if}
+        </div>
+        {#if partiture.tablature}
+          <div class="line"></div>
+          <div class="stave">
+            <StaveTab lines={partiture.tablatureLines} />
+            <div class="bars" style="height: {heightBar + config.staves.marginTopDown*2}px">
+              {#each stave.bars as bar}
+                <Bar {bar} height={heightBar}/>
+              {/each}
+            </div>
+            {#if idx === staves.stavesG.length-1}
+              <div class="stave-end" style="height: {heightBar + config.staves.marginTopDown*2}px">
+                <div style="height: {heightBar}px">
+                  <span></span>
+                </div>
+              </div>
+            {/if}
+            
           </div>
         {/if}
-        
       </div>
     {/each}
-
     {#each staves.stavesF as stave}
       <div class="stave">
         <StaveF />
@@ -238,6 +261,18 @@ onMount(() => {
     margin: 20px;
     padding: 20px;
     border-radius: 2px;
+  }
+  .stave-group{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    .line{
+      position: absolute;
+      top:20px;
+      width: 2px;
+      height: calc(100% - 40px);
+      background-color: #000;
+    }
   }
   .stave {
     position:relative;
