@@ -169,7 +169,8 @@ const partiture: Partiture = {
         { note: 'C4', figure: 'q', dotted: false, triplets: false, triplests_dotted: false},
         { note: 'C4', figure: '8', dotted: false, triplets: false, triplests_dotted: false},
         { note: 'C4', figure: '8', dotted: false, triplets: false, triplests_dotted: false},
-        { note: 'C4', figure: 'q', dotted: false, triplets: false, triplests_dotted: false},
+        { note: 'C4', figure: '8', dotted: false, triplets: false, triplests_dotted: false},
+        { note: 'C4', figure: '8', dotted: false, triplets: false, triplests_dotted: false},
         { note: 'C4', figure: 'q', dotted: false, triplets: false, triplests_dotted: false}
       ]
     },

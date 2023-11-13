@@ -33,38 +33,55 @@ function calculateBarWidth(bar: Bar) {
   return width;
 }
 
-function processClef(bars, widthScreen: number) {
-  // ClefG
-  const staves = [];
-  let currentStave = { bars: [], totalWidth: 0 };
-
-  for (const currentBar of bars) {
-    const currentBarWidth = calculateBarWidth(currentBar);
-    currentBar.width = currentBarWidth;
-    // TODO: si clave de fa, calcularla, y comparar con clave de sol para coger el width que mayor sea de los dos.
-    if (currentStave.totalWidth + currentBarWidth > widthScreen) {
-      // Agregar clave de fa a su stave tambien
-      staves.push(currentStave);
-      currentStave = { bars: [], totalWidth: 0 };
-    }
-    //agregar bar a stave de clave de FA tambien
-    currentStave.bars.push(currentBar);
-    currentStave.totalWidth += currentBarWidth;
-  }
-
-  // Agrega la última sección si es necesario
-  if (currentStave.bars.length > 0) {
-    staves.push(currentStave);
-  }
-
-  return staves;
-}
 export function processPartiture(partiture: Partiture, widthScreen: number) {
   // TODO: Hay que procesar el width del header: clef, time signature, etc.
   const { bars, barsF } = partiture;
 
-  const stavesG = processClef(bars, widthScreen);
-  const stavesF = processClef(barsF, widthScreen);
+  // ClefG
+  const stavesG = [];
+  const stavesF = [];
+  let currentStave = { bars: [], totalWidth: 0 };
+  let currentStaveF = { bars: [], totalWidth: 0 };
+
+  for (let i = 0; i < bars.length; i++) {
+    const currentBar = bars[i];
+    const currentBarWidth = calculateBarWidth(currentBar);
+    let currentBarF = null;
+    if (partiture.clefF && barsF.length > i) {
+      currentBarF = barsF[i];
+      const currentBarFWidth = calculateBarWidth(currentBarF);
+      if (currentBarWidth > currentBarFWidth) {
+        currentBar.width = currentBarWidth;
+        currentBarF.width = currentBarWidth;
+      } else {
+        currentBar.width = currentBarFWidth;
+        currentBarF.width = currentBarFWidth;
+      }
+    } else {
+      currentBar.width = currentBarWidth;
+    }
+    if (currentStave.totalWidth + currentBarWidth > widthScreen) {
+      stavesG.push(currentStave);
+      currentStave = { bars: [], totalWidth: 0 };
+      if (currentBarF) {
+        stavesF.push(currentStaveF);
+        currentStaveF = { bars: [], totalWidth: 0 };
+      }
+    }
+
+    currentStave.bars.push(currentBar);
+    currentStave.totalWidth += currentBarWidth;
+    if (currentBarF) {
+      currentStaveF.bars.push(barsF[i]);
+      currentStaveF.totalWidth += currentBarWidth;
+    }
+  }
+
+  // Agrega la última sección si es necesario
+  if (currentStave.bars.length > 0) {
+    stavesG.push(currentStave);
+    stavesF.push(currentStaveF);
+  }
 
   return { stavesG, stavesF };
 }
