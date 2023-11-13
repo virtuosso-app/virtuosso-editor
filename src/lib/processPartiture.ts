@@ -41,11 +41,13 @@ function processClef(bars, widthScreen: number) {
   for (const currentBar of bars) {
     const currentBarWidth = calculateBarWidth(currentBar);
     currentBar.width = currentBarWidth;
+    // TODO: si clave de fa, calcularla, y comparar con clave de sol para coger el width que mayor sea de los dos.
     if (currentStave.totalWidth + currentBarWidth > widthScreen) {
+      // Agregar clave de fa a su stave tambien
       staves.push(currentStave);
       currentStave = { bars: [], totalWidth: 0 };
     }
-
+    //agregar bar a stave de clave de FA tambien
     currentStave.bars.push(currentBar);
     currentStave.totalWidth += currentBarWidth;
   }

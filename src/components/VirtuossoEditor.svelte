@@ -12,8 +12,8 @@ let editorWidth: number
 
 const partiture: Partiture = {
   clefG: true,
-  clefF: false,
-  tablature: true,
+  clefF: true,
+  tablature: false,
   tablatureLines: 6,
   bars: [
     {
@@ -163,16 +163,16 @@ const partiture: Partiture = {
     },
   ],
   barsF: [
-    // {
-    //   ticks: 192,
-    //   notes: [
-    //     { note: 'C4', figure: 'q', dotted: false, triplets: false, triplests_dotted: false},
-    //     { note: 'C4', figure: '8', dotted: false, triplets: false, triplests_dotted: false},
-    //     { note: 'C4', figure: '8', dotted: false, triplets: false, triplests_dotted: false},
-    //     { note: 'C4', figure: 'q', dotted: false, triplets: false, triplests_dotted: false},
-    //     { note: 'C4', figure: 'q', dotted: false, triplets: false, triplests_dotted: false}
-    //   ]
-    // },
+    {
+      ticks: 192,
+      notes: [
+        { note: 'C4', figure: 'q', dotted: false, triplets: false, triplests_dotted: false},
+        { note: 'C4', figure: '8', dotted: false, triplets: false, triplests_dotted: false},
+        { note: 'C4', figure: '8', dotted: false, triplets: false, triplests_dotted: false},
+        { note: 'C4', figure: 'q', dotted: false, triplets: false, triplests_dotted: false},
+        { note: 'C4', figure: 'q', dotted: false, triplets: false, triplests_dotted: false}
+      ]
+    },
   ]
 }
 
@@ -202,7 +202,6 @@ onMount(() => {
   {#if loaded}
     {#each staves.stavesG as stave, idx}
       <div class="stave-group">
-       
         <div class="stave">
           <StaveG />
           <div class="bars" style="height: {config.staves.height + config.staves.marginTopDown*2}px">
@@ -237,18 +236,22 @@ onMount(() => {
             
           </div>
         {/if}
+        {#if partiture.clefF}
+          <div class="line"></div>
+          <div class="stave">
+            <StaveF />
+            <div class="bars" style="height: {config.staves.height + config.staves.marginTopDown*2}px">
+              {#if staves.stavesF[idx]}
+                {#each staves.stavesF[idx].bars as bar}
+                  <Bar {bar} height={config.staves.height}/>
+                {/each}
+              {/if}
+            </div>
+          </div>
+        {/if}
       </div>
     {/each}
-    {#each staves.stavesF as stave}
-      <div class="stave">
-        <StaveF />
-        <div class="bars" style="height: {config.staves.height + config.staves.marginTopDown*2}px">
-          {#each stave.bars as bar}
-            <Bar {bar} height={config.staves.height}/>
-          {/each}
-        </div>
-      </div>
-    {/each}
+    
   {/if}
 </div>
 <style lang="scss">
