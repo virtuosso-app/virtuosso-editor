@@ -21,12 +21,13 @@ export default {
   },
   bar: {
     defaultWidth: 80,
+    margin: 20,
   },
   figures: {
     w: {
       type: "whole_note",
       ticks: 192,
-      width: 80,
+      width: 120,
     },
     h: {
       type: "half_note",
@@ -39,7 +40,7 @@ export default {
       dotted: 24,
       triplets: 32,
       triplets_dotted: 16,
-      width: 20,
+      width: 30,
     },
     8: {
       type: "eight_note",

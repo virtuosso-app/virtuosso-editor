@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Figure from "./figures/Figure.svelte";
+
 export let bar: any
 
 export let height: number
@@ -12,7 +14,9 @@ const barCompleted = () => {
 </script>
 
 <div class="bar" style="width: {bar.width}px; height: {height}px">
-  {bar.ticks} - {bar.width}
+  {#each bar.notes as note}
+    <Figure {note} />
+  {/each}
 </div>
 
 <style lang="scss">
@@ -20,6 +24,7 @@ const barCompleted = () => {
     position: relative;
     border-right: 2px solid #000;
     color: black;
+    display: flex;
     &:last-child{
     border-right: none;
   }
