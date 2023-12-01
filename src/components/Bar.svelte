@@ -15,8 +15,8 @@ const barCompleted = () => {
 </script>
 
 <div class="bar" style="width: {bar.width}px; height: {height}px;padding: 0 {config.bar.margin}px">
-  {#each bar.notes as note}
-    <Figure {note} />
+  {#each bar.notes as note, index}
+    <Figure {note} nextNote={bar.notes[index+1]} />
   {/each}
 </div>
 
