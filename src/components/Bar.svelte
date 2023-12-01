@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { default as config } from '../config/editor'
   import Figure from "./figures/Figure.svelte";
 
 export let bar: any
@@ -13,7 +14,7 @@ const barCompleted = () => {
 
 </script>
 
-<div class="bar" style="width: {bar.width}px; height: {height}px">
+<div class="bar" style="width: {bar.width}px; height: {height}px;padding: 0 {config.bar.margin}px">
   {#each bar.notes as note}
     <Figure {note} />
   {/each}
@@ -25,6 +26,7 @@ const barCompleted = () => {
     border-right: 2px solid #000;
     color: black;
     display: flex;
+    justify-content: flex-start;
     &:last-child{
     border-right: none;
   }

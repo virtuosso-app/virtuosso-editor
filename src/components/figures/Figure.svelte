@@ -6,14 +6,36 @@
   const type = '_up'
 </script>
 
-<div class="figure" style="width: {config.figures[note.figure].width}px">
-  <img src="assets/figures/{figure.type}{type}.svg">
+<div class="figure" style="width: {figure.width}px">
+  <img src="assets/figures/{figure.head}.svg" class="head">
+  {#if figure.pilar}
+  <img src="assets/figures/pilar.svg" class="pilar">
+  {/if}
+  {#if figure.stem}
+  <img src="assets/figures/stem.svg" class="stem">
+  {/if}
+
 </div>
 
 <style lang="scss">
   .figure{
-    img{
-      width: 30px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    // transform: rotate(180deg);
+    &.down{
+      transform: rotate(180deg);
+    }
+    .head{
+      width: 12px;
+    }
+    .pilar{
+      width: 10px;
+      height: 30px;
+      margin-top: -10px;
+      margin-left: -1px;
+
     }
   }
 </style>
