@@ -1,5 +1,5 @@
 <script>
     import TailwindCss from './lib/TailwindCSS.svelte';
-  </script>
+</script>
   
-  <TailwindCss/>
+<TailwindCss/>
