@@ -1,19 +1,7 @@
-import { resolve } from 'path';
-import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
-// https://vitejs.dev/guide/build.html#library-mode
+import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
 
-/// <reference types="vitest" />
-// Configure Vitest (https://vitest.dev/config/)
-
+// https://vitejs.dev/config/
 export default defineConfig({
-	build: {
-		lib: {
-			entry: resolve(__dirname, 'src/index.ts'),
-			name: 'virtuosso-editor',
-			fileName: 'virtuosso-editor'
-		}
-	},
-	plugins: [dts()]
-	// test: {}
+  plugins: [svelte()],
 });
