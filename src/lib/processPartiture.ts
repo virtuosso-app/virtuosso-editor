@@ -37,6 +37,7 @@ export function processPartiture(partiture: Partiture, widthScreen: number) {
   // TODO: Hay que procesar el width del header: clef, time signature, etc.
   const { bars, barsF } = partiture;
 
+  const barMargin = config.bar.margin;
   // ClefG
   const stavesG = [];
   const stavesF = [];
@@ -45,11 +46,11 @@ export function processPartiture(partiture: Partiture, widthScreen: number) {
 
   for (let i = 0; i < bars.length; i++) {
     const currentBar = bars[i];
-    const currentBarWidth = calculateBarWidth(currentBar);
+    const currentBarWidth = calculateBarWidth(currentBar) + barMargin;
     let currentBarF = null;
     if (partiture.clefF && barsF.length > i) {
       currentBarF = barsF[i];
-      const currentBarFWidth = calculateBarWidth(currentBarF);
+      const currentBarFWidth = calculateBarWidth(currentBarF) + barMargin;
       if (currentBarWidth > currentBarFWidth) {
         currentBar.width = currentBarWidth;
         currentBarF.width = currentBarWidth;

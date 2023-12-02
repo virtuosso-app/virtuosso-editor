@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { default as config } from '../config/editor'
+  import Figure from "./figures/Figure.svelte";
+
 export let bar: any
 
 export let height: number
@@ -11,8 +14,10 @@ const barCompleted = () => {
 
 </script>
 
-<div class="bar" style="width: {bar.width}px; height: {height}px">
-  {bar.ticks} - {bar.width}
+<div class="bar" style="width: {bar.width}px; height: {height}px;padding: 0 {config.bar.margin}px">
+  {#each bar.notes as note, index}
+    <Figure {note} nextNote={bar.notes[index+1]} />
+  {/each}
 </div>
 
 <style lang="scss">
@@ -20,6 +25,8 @@ const barCompleted = () => {
     position: relative;
     border-right: 2px solid #000;
     color: black;
+    display: flex;
+    justify-content: flex-start;
     &:last-child{
     border-right: none;
   }
