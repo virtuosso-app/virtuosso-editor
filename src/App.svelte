@@ -1,9 +1,11 @@
 <script lang="ts">
-  import VirtuossoEditor from "./components/VirtuossoEditor.svelte";
+    import VirtuossoEditor from "./components/VirtuossoEditor.svelte";
+    import TailwindCss from './lib/TailwindCSS.svelte';
 </script>
 
 <main>
-  <VirtuossoEditor />
+    <VirtuossoEditor />
+    <TailwindCss/>
 </main>
 
 <style>
@@ -18,3 +20,4 @@
     overflow-x: hidden;
   }
 </style>
+
