@@ -1,11 +1,9 @@
 <script lang="ts">
     import VirtuossoEditor from "./components/VirtuossoEditor.svelte";
-    import TailwindCss from './lib/TailwindCSS.svelte';
 </script>
 
 <main>
     <VirtuossoEditor />
-    <TailwindCss/>
 </main>
 
 <style>
