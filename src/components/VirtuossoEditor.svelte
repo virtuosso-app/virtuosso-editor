@@ -199,6 +199,8 @@ onMount(() => {
   on:resize={process}
   />
 
+<div class="text-cyan-500">Partitura</div>
+
 <div class="editor" bind:clientWidth={editorWidth}>
   {#if loaded}
     {#each staves.stavesG as stave, idx}
